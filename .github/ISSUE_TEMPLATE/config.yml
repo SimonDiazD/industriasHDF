@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📋 Ver el backlog completo
+    url: https://github.com/TU-USUARIO/TU-REPO/issues
+    about: Consulta las Historias de Usuario y bugs ya registrados antes de crear uno nuevo.

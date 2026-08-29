@@ -1,0 +1,64 @@
+name: CI Backend
+
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+  push:
+    branches: [main, dev]
+    paths:
+      - "backend/**"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      # --- Si tu backend es Node.js, deja esto activo ---
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Instalar dependencias (Node)
+        run: npm ci
+
+      - name: Linter (Node)
+        run: npm run lint --if-present
+
+      - name: Ejecutar pruebas (Node)
+        run: npm test --if-present
+
+      # --- Si tu backend es Python, comenta el bloque de Node de arriba
+      #     y descomenta este bloque ---
+      # - name: Configurar Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: "3.12"
+      #
+      # - name: Instalar dependencias (Python)
+      #   run: pip install -r requirements.txt
+      #
+      # - name: Linter (Python)
+      #   run: pip install flake8 && flake8 .
+      #
+      # - name: Ejecutar pruebas (Python)
+      #   run: pytest
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Escaneo de dependencias vulnerables
+        uses: actions/dependency-review-action@v4
+        if: github.event_name == 'pull_request'

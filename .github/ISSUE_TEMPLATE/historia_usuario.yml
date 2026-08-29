@@ -1,0 +1,100 @@
+name: "📖 Historia de Usuario"
+description: Plantilla estándar para registrar una Historia de Usuario con sus criterios de aceptación.
+title: "[HU] "
+labels: ["historia-usuario"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Historia de Usuario
+        Completa los campos siguiendo el formato estándar. Sé específico: esta HU debe poder cerrarse con un Pull Request.
+        Si toca varias capas (frontend/backend/database), indícalo en "Notas técnicas" — no dupliques la HU por capa.
+
+  - type: input
+    id: rol
+    attributes:
+      label: Rol
+      description: ¿Quién usa esta funcionalidad?
+      placeholder: "Como usuario administrador"
+    validations:
+      required: true
+
+  - type: input
+    id: funcionalidad
+    attributes:
+      label: Funcionalidad
+      description: ¿Qué quiere hacer ese rol?
+      placeholder: "Quiero poder exportar los reportes en PDF"
+    validations:
+      required: true
+
+  - type: input
+    id: beneficio
+    attributes:
+      label: Beneficio
+      description: ¿Para qué lo quiere? ¿Qué problema resuelve?
+      placeholder: "Para compartir los resultados con clientes que no tienen acceso al sistema"
+    validations:
+      required: true
+
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de Aceptación (formato Gherkin)
+      description: Define al menos un escenario. Puedes agregar varios usando el mismo formato.
+      placeholder: |
+        Escenario 1: Exportación exitosa
+        Dado que el usuario tiene un reporte generado
+        Cuando presiona el botón "Exportar a PDF"
+        Entonces el sistema descarga un archivo PDF con el contenido del reporte
+
+        Escenario 2: Reporte vacío
+        Dado que el usuario intenta exportar un reporte sin datos
+        Cuando presiona el botón "Exportar a PDF"
+        Entonces el sistema muestra un mensaje de error indicando que no hay datos para exportar
+      render: gherkin
+    validations:
+      required: true
+
+  - type: dropdown
+    id: capas
+    attributes:
+      label: Capas involucradas
+      description: Selecciona todas las que aplican
+      multiple: true
+      options:
+        - Frontend
+        - Backend
+        - Database
+    validations:
+      required: true
+
+  - type: dropdown
+    id: prioridad
+    attributes:
+      label: Prioridad
+      options:
+        - Alta
+        - Media
+        - Baja
+    validations:
+      required: true
+
+  - type: textarea
+    id: notas_tecnicas
+    attributes:
+      label: Notas técnicas (opcional)
+      description: Dependencias, endpoints involucrados, tablas afectadas, consideraciones de diseño, etc.
+      placeholder: "Toca frontend/src/components/ReportExport.tsx y backend/routes/reports.js. Requiere migración en database/ si se agrega columna de estado."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: definicion_hecho
+    attributes:
+      label: Definición de Hecho (Definition of Done)
+      options:
+        - label: Código implementado y en PR
+        - label: Pruebas unitarias escritas y pasando
+        - label: Criterios de aceptación validados manualmente
+        - label: Sin errores de linter/seguridad detectados en CI
