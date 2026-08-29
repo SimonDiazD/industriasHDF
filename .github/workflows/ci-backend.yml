@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # --- Si tu backend es Node.js, deja esto activo ---
       - name: Configurar Node.js
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Escaneo de dependencias vulnerables
         uses: actions/dependency-review-action@v4
