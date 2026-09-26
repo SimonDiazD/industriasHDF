@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+
+jobs:
+  build-and-test:
+    name: Lint, tipos, pruebas y build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v7
+
+      - name: Configurar pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Linter
+        run: pnpm run --if-present lint
+
+      - name: Chequeo de tipos
+        run: pnpm run --if-present typecheck
+
+      - name: Pruebas
+        run: pnpm run --if-present test
+
+      - name: Build
+        run: pnpm run build
+
+  dependency-review:
+    name: Revisión de dependencias
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v7
+
+      - name: Escaneo de dependencias vulnerables
+        uses: actions/dependency-review-action@v5
+        with:
+          comment-summary-in-pr: on-failure

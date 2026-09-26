@@ -1,6 +1,3 @@
-## Historia de Usuario relacionada
-Closes #<!-- número del issue, ej: Closes #23 -->
-
 ## Descripción
 <!-- ¿Qué cambia este PR? -->
 
@@ -10,7 +7,6 @@ Closes #<!-- número del issue, ej: Closes #23 -->
 - [ ] Database
 
 ## Checklist antes de pedir revisión
-- [ ] Los criterios de aceptación de la HU se cumplen
 - [ ] Agregué/actualicé pruebas
 - [ ] Corrí el proyecto localmente y funciona
 - [ ] No dejé credenciales, `console.log`/`print` de debug, ni código comentado innecesario

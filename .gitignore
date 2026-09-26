@@ -5,23 +5,20 @@
 *.pem
 *.key
 
-# --- Node.js (frontend y/o backend) ---
+# --- Node.js / Next.js ---
 node_modules/
 dist/
 build/
+out/
 .next/
+.vercel/
 .turbo/
 coverage/
+*.tsbuildinfo
+next-env.d.ts
 npm-debug.log*
 yarn-error.log*
-
-# --- Python (si el backend es Python) ---
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-venv/
-.pytest_cache/
+.pnpm-debug.log*
 
 # --- Bases de datos locales ---
 *.sqlite3
